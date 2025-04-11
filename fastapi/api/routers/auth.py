@@ -35,7 +35,7 @@ def authenticate_user(username: str, password: str, db: db_dependency):
     return False 
   return user
 
-def create_access_token(username: str, user_id: int, expires_delta: timedelta): # what is time delta 
+def create_access_token(username: str, user_id: int, expires_delta: timedelta): 
   encode = {'sub': username, 'id': user_id} 
   expires = datetime.now(timezone.utc) + expires_delta
   encode.update({'exp': expires}) 
