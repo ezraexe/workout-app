@@ -9,7 +9,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import Base, engine
-from routers import auth
+from routers import auth, workouts 
 
 app = FastAPI() 
 
@@ -29,6 +29,7 @@ def health_check():
   return 'Health check completed'
 
 app.include_router(auth.router) 
+app.include_router(workouts.router) 
 
 
 
