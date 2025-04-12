@@ -30,7 +30,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)] # easy access to database 
 
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto') # allows us to hash and verify passwords 
-oauth2_bearer = OAuth2PasswordBearer(tokenUrl='token') # allows us to get the token from the request 
+oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token') # allows us to get the token from the request 
 oauth2_bearer_dependency = Annotated[str, Depends(oauth2_bearer)] # easy access to the token 
 
 
