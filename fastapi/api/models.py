@@ -33,5 +33,7 @@ class Routine(Base):
   name = Column(String, index=True)
   description = Column(String, index=True) 
   workouts = relationship('Workout', secondary=workout_routine_association, back_populates='routines')
-  
+
+# secondary: This points to the association table (workout_routine_association) that connects workouts and routines
+# back_populates: This tells SQLAlchemy that changes to one side of the relationship should be reflected on the other side
 Workout.routines = relationship('Routine', secondary=workout_routine_association, back_populates='workouts')
