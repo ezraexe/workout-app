@@ -13,7 +13,7 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext # hashing passwords 
 from dotenv import load_dotenv
 import os 
-from .database import SessionLocal
+from database import SessionLocal
 
 load_dotenv() 
 

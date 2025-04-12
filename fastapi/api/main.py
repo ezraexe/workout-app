@@ -8,8 +8,8 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.database import Base, engine
-from api.routers import auth
+from database import Base, engine
+from routers import auth
 
 app = FastAPI() 
 

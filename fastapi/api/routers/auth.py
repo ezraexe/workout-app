@@ -12,8 +12,8 @@ from jose import jwt, JWTError
 from dotenv import load_dotenv 
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer 
 import os 
-from api.models import User  
-from api.deps import db_dependency, bcrypt_context 
+from models import User 
+from deps import db_dependency, bcrypt_context 
 
 load_dotenv() 
 
