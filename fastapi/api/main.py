@@ -4,7 +4,7 @@
 # creates database tables 
 # configures CORS for frontend communication 
 # including authentication routes 
-# provides health check 
+# provides health check endpoint 
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

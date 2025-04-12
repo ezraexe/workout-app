@@ -1,5 +1,6 @@
 # FILE SUMMARY 
 # setting up dependencies to be used in the application for easy access 
+# basically allows us to have one place to manage all dependencies 
 # handles database session management 
 # provides password hashing utilities 
 # handles jwt token management 
@@ -32,6 +33,10 @@ bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto') # allows us
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl='token') # allows us to get the token from the request 
 oauth2_bearer_dependency = Annotated[str, Depends(oauth2_bearer)] # easy access to the token 
 
+
+# gets current user from token 
+# allows us to know which user is making the request 
+# otherwise we would have to check the token for each request 
 async def get_current_user(token: oauth2_bearer_dependency): 
   try: 
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
