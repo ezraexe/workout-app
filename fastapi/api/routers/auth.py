@@ -1,3 +1,9 @@
+# FILE SUMMARY 
+# user creation endpoint 
+# login endpoint 
+# token generation 
+# password verification 
+
 from datetime import timedelta, datetime, timezone 
 from typing import Annotated 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -61,4 +67,5 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
   
   return {'access_token': token, 'token_type': 'Bearer'}
   
+
   

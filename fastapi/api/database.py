@@ -1,3 +1,11 @@
+# FILE SUMMARY 
+# sets up SQLite databae 
+# creates the database engine 
+# configures session management 
+# provides base class for models 
+
+# still dont have the best understanding of this file 
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker

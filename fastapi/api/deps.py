@@ -1,3 +1,9 @@
+# FILE SUMMARY 
+# setting up dependencies to be used in the application for easy access 
+# handles database session management 
+# provides password hashing utilities 
+# handles jwt token management 
+
 from typing import Annotated
 from sqlalchemy.orm import Session # lets us talk to database 
 from fastapi import Depends, HTTPException, status

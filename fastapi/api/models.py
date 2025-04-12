@@ -1,3 +1,7 @@
+# FILE SUMMARY 
+# defines the database structures of user, workout, routine, 
+# also defines workout_routine_association which links the workout and routine tables 
+
 from sqlalchemy import Column, Integer, String, ForeignKey, Table
 from sqlalchemy.orm import relationship 
 from .database import Base 

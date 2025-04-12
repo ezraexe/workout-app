@@ -1,8 +1,21 @@
+# FILE SUMMARY 
+# entry point of the application 
+# sets up fast api application 
+# creates database tables 
+# configures CORS for frontend communication 
+# including authentication routes 
+# provides health check 
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from api.database import Base, engine
+from api.routers import auth
 
 app = FastAPI() 
 
+# looks at all the models in the classes and creates the tables in the database 
+
+Base.metadata.create_all(bind=engine) 
 app.add_middleware(
   CORSMiddleware, 
   allow_origins=['http://localhost:3000'],
@@ -13,4 +26,9 @@ app.add_middleware(
 
 @app.get("/")
 def health_check(): 
-  return 'Health check completed' 
+  return 'Health check completed'
+
+app.include_router(auth.router) 
+
+
+
