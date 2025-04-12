@@ -14,4 +14,4 @@ fastapi / sql practice
 
 ### Tips 
 - use /docs to see swaggerui when loading into localhost version
-- use "uvicorn api.main:app --reload" in api folder to view the api documentation 
+- use "uvicorn main:app --reload" in api folder to view the api documentation 
