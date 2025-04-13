@@ -5,7 +5,15 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios' 
 // import { User } from '@/fastapi/api/models' 
 
-const AuthContext = createContext({});
+// First, define the context type
+type AuthContextType = {
+  user: any;  // Replace 'any' with your user type
+  login: (username: string, password: string) => Promise<void>;
+  logout: () => void;
+}
+
+// Then create context with the type
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 type AuthProviderProps = {
   children: React.ReactNode
