@@ -1,56 +1,88 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect } from 'react' 
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react' 
 import { useRouter } from 'next/navigation' 
 import axios from 'axios' 
 // import { User } from '@/fastapi/api/models' 
 
-// First, define the context type
-type AuthContextType = {
-  user: any;  // Replace 'any' with your user type
+interface AuthContextType {
+  isAuthenticated: boolean;
+  user: any | null;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
+const defaultValue: AuthContextType = {
+  isAuthenticated: false,
+  user: null,
+  login: async () => {},
+  logout: () => {},
+};
+
 // Then create context with the type
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+const AuthContext = createContext<AuthContextType>(defaultValue);
 
 type AuthProviderProps = {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => { 
-  const [user, setUser] = useState(null); 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
   const router = useRouter(); 
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+      // Optionally fetch user data here
+    }
+  }, []);
 
   const login = async (username: string, password: string) => { 
     try {
+      // Using form data as it was in the original implementation
       const formData = new FormData(); 
       formData.append('username', username); 
       formData.append('password', password); 
-      const response = await axios.post('http://localhost:8000/api/auth/token', formData, {
+      
+      // Correct endpoint URL based on FastAPI router definition
+      const response = await axios.post('http://localhost:8000/auth/token', formData, {
         headers: { 
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       });
-      axios.defaults.headers.common['Authorization'] = 'Bearer ${response.data.access_token}'; 
+      
+      // Set the authorization header for future requests
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`; 
+      
+      // Store token in localStorage
       localStorage.setItem('token', response.data.access_token); 
+      
+      // Update state
+      setIsAuthenticated(true);
       setUser(response.data);
-      router.push('/'); 
+      
+      router.push('/dashboard'); 
     } catch (error) { 
-      console.log('Login failed', error); 
+      console.error('Login failed:', error);
+      throw error;
     }
   }; 
 
   const logout = () => { 
+    // Remove token from localStorage
+    localStorage.removeItem('token');
+    
+    // Update state
+    setIsAuthenticated(false);
     setUser(null);
-    delete axios.defaults.headers.common['Authorization']; 
-    localStorage.removeItem('token'); 
     router.push('/login')
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}> 
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}> 
       {children} 
     </AuthContext.Provider>
   );
